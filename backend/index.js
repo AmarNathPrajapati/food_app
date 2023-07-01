@@ -12,11 +12,16 @@ app.use((req, res, next) => {
 });
 app.use(cors());
 app.use(express.json());//other wise request body will show you error
+
 //api end points
 //API to create a new user and login
 app.use('/api',require('./routes/createUser'));
 app.use('/api',require('./routes/displayData'));
-
+//routes for the food category
+app.use('/api',require('./routes/addCategory'));
+app.use('/api',require('./routes/getCategory'));
+//routes for food items
+app.use('/api',require('./routes/getItems'))
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
