@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-
+import axios from 'axios'
+axios.defaults.baseURL = "http://localhost:5000/api/"
 const SignUp = () => {
     //collecting form data into userData to send backend
     const [userData, setUserData] = useState({
@@ -8,6 +9,7 @@ const SignUp = () => {
         "password":"",
         "location":""
     })
+
     const handleChange = (e) =>{
         setUserData({
             ...userData,[e.target.name]:e.target.value
@@ -15,28 +17,14 @@ const SignUp = () => {
     }
     //connection to backend with post using fetch API
     const handleSubmit = async(e) =>{
-        e.preventDefault()
-        const response =await fetch("http://localhost:5000/api/createuser",
-        {
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                name:userData.name,
-                email:userData.email,
-                password:userData.password,
-                location:userData.location
-            })
-        })
-        // console.log(response);
-        const json = await response.json();
-        // console.log(json)
-        if(!json.success){
-            alert("Enter Valid Crendentials")
+        e.preventDefault();
+        const data = await axios.post('/createuser',userData);
+        if(data.data.success){
+            alert("Data inserted Successfully");
         }else{
-            alert("User created Successfully")
+            alert("something went wrong");
         }
+        
     }
     return (
         <div>
