@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     //collecting form data into userData to send backend
@@ -12,6 +13,7 @@ const Login = () => {
         })
     }
     //connection to backend with post using fetch API
+    const navigate = useNavigate();
     const handleSubmit = async(e) =>{
         e.preventDefault()
         const response =await fetch("http://localhost:5000/api/login",
@@ -31,9 +33,9 @@ const Login = () => {
         if(!json.success){
             alert("Enter Valid Crendentials")
         }else{
-            alert("Logged In Successful");
+            // alert("Logged In Successful");
             localStorage.setItem("authtoken",json.authtoken);
-            window.location.href = "/";
+            navigate('/');
         }
     }
     return (
